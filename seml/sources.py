@@ -117,7 +117,7 @@ def upload_sources(seml_config, collection, batch_id):
     repo = Repo(git_repo_dir, search_parent_directories=True)
     for entry in repo.commit().tree.traverse():
         if entry.type == 'blob':
-            tracked_files.append(entry.path)
+            tracked_files.append(entry.abspath)
     sources.update(tracked_files)
 
     uploaded_files = []
