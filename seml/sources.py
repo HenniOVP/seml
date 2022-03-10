@@ -99,11 +99,25 @@ def upload_sources(seml_config, collection, batch_id):
         raise ExecutableError(f"Executable {executable_abs} was not found in the source code files to upload.")
 
     # Extend sources with git files
+    git_repo_dir = root_dir + "/.git"
     git_files = []
-    for root, directories, files in os.walk(root_dir + "/.git"):
+    for root, directories, files in os.walk(git_repo_dir):
         for name in files:
             git_files.append(os.path.join(root, name))
     sources.update(git_files)
+
+    # Also add all files, which are tracked by git, not just the ones the program is using
+    # Otherwise the downloaded files may be recognized as dirty wrt. the git repo, since some files may be missing.
+    tracked_files = []
+    try:
+        from git import Repo, InvalidGitRepositoryError
+    except ImportError:
+        logging.warning("Cannot import git (pip install GitPython). "
+                        "Not saving git status.")
+    repo = Repo(git_repo_dir, search_parent_directories=True)
+    for entry in repo.commit().tree.traverse():
+        tracked_files.append(entry)
+    sources.update(tracked_files)
 
     uploaded_files = []
     for s in sources:
