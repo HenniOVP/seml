@@ -9,6 +9,8 @@ from seml.database import upload_file
 from seml.errors import ExecutableError, MongoDBError
 from seml.settings import SETTINGS
 
+from glob import glob
+
 States = SETTINGS.STATES
 
 
@@ -95,6 +97,13 @@ def upload_sources(seml_config, collection, batch_id):
 
     if executable_abs not in sources:
         raise ExecutableError(f"Executable {executable_abs} was not found in the source code files to upload.")
+
+    # Extend sources with git files
+    git_files = []
+    for root, directories, files in os.walk(root_dir + "/.git"):
+        for name in files:
+            git_files.append(os.path.join(root, name))
+    sources.update(git_files)
 
     uploaded_files = []
     for s in sources:
