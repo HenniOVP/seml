@@ -116,7 +116,7 @@ def upload_sources(seml_config, collection, batch_id):
                         "Not saving git status.")
     repo = Repo(git_repo_dir, search_parent_directories=True)
     for entry in repo.commit().tree.traverse():
-        tracked_files.append(entry)
+        tracked_files.append(entry.path)
     sources.update(tracked_files)
 
     uploaded_files = []
