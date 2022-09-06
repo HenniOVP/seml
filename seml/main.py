@@ -204,6 +204,14 @@ def main():
     parser_status = subparsers.add_parser(
             "status",
             help="Report status of experiments in the database collection.")
+    parser_status.add_argument(
+            '-ddk', '--dont_detect_killed', action='store_true',
+            help="Disables the automatic detection of killed jobs. "
+                 "This is useful when the jobs are running on a different cluster, "
+                 "meaning that the local cluster would report that the jobs were killed, "
+                 "even if they are in fact still running, "
+                 "causing the running jobs to be canceled on the other cluster. "
+                 "To manually detect killed jobs use the detect-killed command.")
     parser_status.set_defaults(func=report_status)
 
     parser_cancel = subparsers.add_parser(

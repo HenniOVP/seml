@@ -18,8 +18,9 @@ from seml.errors import ArgumentError, MongoDBError
 States = SETTINGS.STATES
 
 
-def report_status(db_collection_name):
-    detect_killed(db_collection_name, print_detected=False)
+def report_status(db_collection_name, dont_detect_killed: bool = False):
+    if not dont_detect_killed:
+        detect_killed(db_collection_name, print_detected=False)
     collection = get_collection(db_collection_name)
     staged = collection.count_documents({'status': {'$in': States.STAGED}})
     pending = collection.count_documents({'status': {'$in': States.PENDING}})
