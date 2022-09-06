@@ -205,7 +205,7 @@ def main():
             "status",
             help="Report status of experiments in the database collection.")
     parser_status.add_argument(
-            '-ddk', '--dont_detect_killed', action='store_true',
+            '-ddk', '--dont-detect-killed', action='store_true',
             help="Disables the automatic detection of killed jobs. "
                  "This is useful when the jobs are running on a different cluster, "
                  "meaning that the local cluster would report that the jobs were killed, "
