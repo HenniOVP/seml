@@ -15,6 +15,9 @@ SETTINGS = munchify(
         # Directory which is used on the compute nodes to dump scripts and Python code.
         # Only change this if you know what you're doing.
         "TMP_DIRECTORY": "/tmp",
+        # Directory which is used on the head node to dump the slurm sbatch script.
+        # Only change this if you know what you're doing.
+        "TMP_DIRECTORY_HEAD_NODE": "/tmp",
 
         "DATABASE": {
             # location of the MongoDB config. Default: $HOME/.config/seml/monogdb.config

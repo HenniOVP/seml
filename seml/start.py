@@ -233,7 +233,7 @@ def start_sbatch_job(collection, exp_array, unobserved=False, name=None,
             **variables,
     )
 
-    path = os.path.join(SETTINGS.TMP_DIRECTORY, f'{uuid.uuid4()}.sh')
+    path = os.path.join(SETTINGS.TMP_DIRECTORY_HEAD_NODE, f'{uuid.uuid4()}.sh')
     with open(path, "w") as f:
         f.write(script)
 
